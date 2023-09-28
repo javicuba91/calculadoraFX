@@ -42,6 +42,9 @@ public class CalculadoraController {
 
 	@FXML
 	private TextArea resultado;
+	
+	@FXML
+	private TextArea historialCalculos;
 
 	@FXML
 	private Button borrar;
@@ -57,6 +60,9 @@ public class CalculadoraController {
 
 	@FXML
 	private Button btnResta;
+	
+	@FXML
+	private Button btnGuardarHistorial;
 
 	@FXML
 	private Button btnMas;
@@ -70,6 +76,8 @@ public class CalculadoraController {
 	private double op2 = 0;
 
 	private double resFinal = 0;
+	
+	private String historiales = "";
 
 	public void clickBtn0(ActionEvent e) {
 		operacion += "" + 0;
@@ -182,6 +190,10 @@ public class CalculadoraController {
 		}
 		
 		resultado.setText(""+resFinal);
+		
+		
+		historiales += operacion+"="+resFinal +"\n";
+		historialCalculos.setText(historiales);
 		//op1 = resFinal;
 		operacion = ""+resFinal;
 	}
@@ -189,5 +201,9 @@ public class CalculadoraController {
 	public void clickBorrar(ActionEvent e) {
 		resultado.setText("0");
 		operacion = "";
+	}
+	
+	public void guardarHistorial(ActionEvent e) {
+		System.out.println(historiales);
 	}
 }
