@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+	<center>
+		<AnchorPane prefHeight="572.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+			<children>
+				<Label fx:id="textoLabel" layoutX="67.0" layoutY="14.0" text="Hola Mundo" />
+				<Button fx:id="darClick" layoutX="69.0" layoutY="325.0" mnemonicParsing="false" onAction="#cambiarTexto" text="Dar click" />
+            <DatePicker fx:id="fecha" layoutX="13.0" layoutY="37.0" />
+            <TextField fx:id="nombreTxt" layoutX="14.0" layoutY="75.0" prefHeight="25.0" prefWidth="171.0" promptText="Introduce tu nombre" />
+            <ImageView fitHeight="92.0" fitWidth="110.0" layoutX="52.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../Desktop/ALFONSO/IMG_20230919_103020.jpg" />
+               </image>
+            </ImageView>
+            <TextArea fx:id="comentario" layoutX="37.0" layoutY="218.0" prefHeight="100.0" prefWidth="126.0" promptText="Entre su comentario" />
+			</children>
+		</AnchorPane>
+	</center>
+</BorderPane>
