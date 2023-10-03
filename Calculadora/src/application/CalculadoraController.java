@@ -1,7 +1,9 @@
 package application;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -71,10 +73,10 @@ public class CalculadoraController {
 
 	@FXML
 	private Button btnGuardarHistorial;
-	
+
 	@FXML
 	private Button btnMas;
-	
+
 	@FXML
 	private Button recuperarHistorialBtn;
 
@@ -236,13 +238,32 @@ public class CalculadoraController {
 		}
 
 	}
-	
+
 	public void recuperarHistorial(ActionEvent e) {
-		
+
 		String nombre_fichero = "operaciones.txt";
 		File file = new File(nombre_fichero);
+		FileReader fr = null;
+		BufferedReader br = null;
 		
+		try {
+			
+			fr = new FileReader(file);
+			br = new BufferedReader(fr);
+			
+			String linea = "";
+			String historialFichero = "";
+			
+			while((linea = br.readLine()) != null) {
+				historialFichero += linea+"\n";
+			}
+			
+			historialCalculos.setText(historialFichero);
+			
+		}catch (Exception a) {
+			// TODO: handle exception
+		}
+
 	}
-	
-	
+
 }
