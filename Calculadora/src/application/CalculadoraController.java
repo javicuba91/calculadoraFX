@@ -71,9 +71,12 @@ public class CalculadoraController {
 
 	@FXML
 	private Button btnGuardarHistorial;
-
+	
 	@FXML
 	private Button btnMas;
+	
+	@FXML
+	private Button recuperarHistorialBtn;
 
 	private String operacion = "";
 
@@ -233,4 +236,13 @@ public class CalculadoraController {
 		}
 
 	}
+	
+	public void recuperarHistorial(ActionEvent e) {
+		
+		String nombre_fichero = "operaciones.txt";
+		File file = new File(nombre_fichero);
+		
+	}
+	
+	
 }
