@@ -1,5 +1,9 @@
 package application;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+
 import javax.swing.Action;
 import javax.swing.JOptionPane;
 
@@ -22,10 +26,38 @@ public class LoginController {
 	@FXML
 	private Button btnAcceder;
 	
-	private String usuario = "admin";
-	private String pass = "dam2023";
+	private String usuario = "";
+	private String pass = "";
+	
+	public void leerDatosAcceso() {
+		
+		String nombre_fichero = "acceso.txt";
+		File file = new File(nombre_fichero);
+		FileReader fr = null;
+		BufferedReader br = null;
+		
+		try {
+			
+			fr = new FileReader(file);
+			br = new BufferedReader(fr);
+			
+			String linea = "";
+			
+			linea = br.readLine();	
+			
+			String[] accesos = linea.split(",");
+			
+			usuario = accesos[0];
+			pass = accesos[1];
+						
+		}catch (Exception a) {
+			// TODO: handle exception
+		}
+	}
 	
 	public void acceder(ActionEvent e) {
+		
+		leerDatosAcceso();
 		
 		String valorUsuario = textUsuario.getText();
 		String valorPass = textPass.getText();
