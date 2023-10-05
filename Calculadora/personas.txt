@@ -1,0 +1,6 @@
+1,Javier,Profesor,32
+2,Gabriel,Alumno,20
+3,Diana,Jefa,20
+4,Mauricio,Gamer,19
+5,Jonathan,Alumno,21
+6,Victor,Alumno,18
