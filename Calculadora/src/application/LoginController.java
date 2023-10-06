@@ -3,10 +3,12 @@ package application;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 import javax.swing.Action;
 import javax.swing.JOptionPane;
 
+import consultas.ConsultasController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import modelos.Persona;
 
 public class LoginController {
 	
@@ -56,6 +59,13 @@ public class LoginController {
 	}
 	
 	public void acceder(ActionEvent e) {
+		
+		ArrayList<Persona> personas = ConsultasController.listarPersonas();
+		
+		for (int i = 0; i < personas.size(); i++) {
+			System.out.println(personas.get(i).toString());
+		}
+		
 		
 		leerDatosAcceso();
 		
