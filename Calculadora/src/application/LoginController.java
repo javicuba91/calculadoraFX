@@ -64,8 +64,7 @@ public class LoginController {
 		
 		for (int i = 0; i < personas.size(); i++) {
 			System.out.println(personas.get(i).toString());
-		}
-		
+		}		
 		
 		leerDatosAcceso();
 		
@@ -79,14 +78,14 @@ public class LoginController {
 				
 				// cargamos el fxml
 				FXMLLoader fxmlLoader = new FXMLLoader();
-				fxmlLoader.setLocation(getClass().getResource("Calculadora.fxml"));
+				fxmlLoader.setLocation(getClass().getResource("Listados.fxml"));
 				
 				// creamos la escena y asociamos el fxml
 				Scene scene = new Scene(fxmlLoader.load());
 				
 				// creamos el stage
 				Stage stage = new Stage();
-				stage.setTitle("Calculadora");				
+				stage.setTitle("Listado de personas");				
 				
 				// asociamos la escena al stage
 				stage.setScene(scene);

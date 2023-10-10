@@ -1,54 +1,59 @@
- package modelos;
+package modelos;
+
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 public class Persona {
 
-	private int id;
-	private String nombre;
-	private String cargo;
-	private int edad;
-	
+	private final SimpleIntegerProperty id;
+	private final SimpleStringProperty nombre;
+	private final SimpleStringProperty cargo;
+	private final SimpleIntegerProperty edad;
+		
+
 	public Persona(int id, String nombre, String cargo, int edad) {
-		this.id = id;
-		this.nombre = nombre;
-		this.cargo = cargo;
-		this.edad = edad;
+		this.id = new SimpleIntegerProperty(id);
+		this.nombre = new SimpleStringProperty(nombre);
+		this.cargo = new SimpleStringProperty(cargo);
+		this.edad = new SimpleIntegerProperty(edad);
 	}
 
 	public int getId() {
-		return id;
+		return id.get();
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int n) {
+		id.set(n);
 	}
 
 	public String getNombre() {
-		return nombre;
+		return nombre.get();
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNombre(String n) {
+		nombre.set(n);
 	}
 
 	public String getCargo() {
-		return cargo;
+		return cargo.get();
 	}
 
-	public void setCargo(String cargo) {
-		this.cargo = cargo;
+	public void setCargo(String n) {
+		cargo.set(n);
 	}
 
 	public int getEdad() {
-		return edad;
+		return edad.get();
 	}
 
-	public void setEdad(int edad) {
-		this.edad = edad;
+	public void setEdad(int n) {
+		edad.set(n);
 	}
+	
 
 	@Override
 	public String toString() {
 		return "Persona [id=" + id + ", nombre=" + nombre + ", cargo=" + cargo + ", edad=" + edad + "]";
 	}
-		
+
 }
