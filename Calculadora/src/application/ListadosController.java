@@ -3,7 +3,9 @@ package application;
 import consultas.ConsultasController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -13,6 +15,9 @@ public class ListadosController {
 
 	@FXML
 	private TableView<Persona> tablaPersonas;
+	
+	@FXML
+	private Button btnAnyadir;
 
 	@FXML
 	private void initialize() {
@@ -33,11 +38,23 @@ public class ListadosController {
 		// Añadir las columnas a la tabla
 		tablaPersonas.getColumns().addAll(columnaID, columnaNombre, columnaCargo, columnaEdad);
 
-		ObservableList<Persona> personList = FXCollections.observableArrayList(new Persona(1, "Alice", "Alumno", 25),
-				new Persona(2, "Bob", "Alumno", 30), new Persona(3, "Charlie", "Alumno", 22));
+		ObservableList<Persona> personList = FXCollections.observableArrayList(ConsultasController.listarPersonas());
 
 		tablaPersonas.setItems(personList);
-
+		
+		// evento click sobre filas de una tabla
+		tablaPersonas.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+		    if (newSelection != null) {
+		       System.out.println(newSelection.getNombre());
+		    }
+		});
+	}
+	
+	public void insertarPersona(ActionEvent e) {
+		Persona p = new Persona(8, "Jonathan", "Profesor", 32);
+		
+		
+		
 	}
 
 }
