@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+
 import consultas.ConsultasController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import modelos.Persona;
 
@@ -18,6 +21,18 @@ public class ListadosController {
 	
 	@FXML
 	private Button btnAnyadir;
+	
+	@FXML
+	private TextField idTxt;
+	
+	@FXML
+	private TextField nombreTxt;
+	
+	@FXML
+	private TextField cargoTxt;
+	
+	@FXML
+	private TextField edadTxt;	
 
 	@FXML
 	private void initialize() {
@@ -51,10 +66,21 @@ public class ListadosController {
 	}
 	
 	public void insertarPersona(ActionEvent e) {
-		Persona p = new Persona(8, "Jonathan", "Profesor", 32);
 		
+		int id = Integer.parseInt(idTxt.getText());		
+		String nombre = nombreTxt.getText();		
+		String cargo = cargoTxt.getText();		
+		int edad = Integer.parseInt(edadTxt.getText());
 		
+		Persona p = new Persona(id, nombre, cargo, edad);
 		
+		ArrayList<Persona> personas = ConsultasController.listarPersonas();
+		
+		personas.add(p);
+		
+		ObservableList<Persona> data = FXCollections.observableArrayList(personas);
+		
+		tablaPersonas.setItems(data);		
 	}
 
 }

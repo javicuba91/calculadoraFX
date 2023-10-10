@@ -3,13 +3,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane prefHeight="342.0" prefWidth="439.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ListadosController">
-   <top>
-      <AnchorPane prefHeight="342.0" prefWidth="441.0" BorderPane.alignment="CENTER">
+   <bottom>
+      <AnchorPane prefHeight="374.0" prefWidth="439.0" BorderPane.alignment="CENTER">
          <children>
             <TableView fx:id="tablaPersonas" layoutX="15.0" layoutY="55.0" prefHeight="200.0" prefWidth="412.0" />
             <Label layoutX="124.0" layoutY="14.0" prefHeight="27.0" prefWidth="194.0" text="LISTADO DE PERSONAS">
@@ -17,8 +18,16 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="btnAnyadir" layoutX="194.0" layoutY="284.0" mnemonicParsing="false" onAction="#insertarPersona" text="Añadir Persona" />
+            <Button fx:id="btnAnyadir" layoutX="184.0" layoutY="320.0" mnemonicParsing="false" onAction="#insertarPersona" text="Añadir Persona">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <TextField fx:id="idTxt" layoutX="14.0" layoutY="268.0" prefHeight="25.0" prefWidth="42.0" promptText="ID" />
+            <TextField fx:id="nombreTxt" layoutX="70.0" layoutY="268.0" prefHeight="25.0" prefWidth="136.0" promptText="Introduce el nombre" />
+            <TextField fx:id="cargoTxt" layoutX="218.0" layoutY="268.0" prefHeight="25.0" prefWidth="136.0" promptText="Introduce el cargo" />
+            <TextField fx:id="edadTxt" layoutX="365.0" layoutY="268.0" prefHeight="25.0" prefWidth="60.0" promptText="Edad" />
          </children>
       </AnchorPane>
-   </top>
+   </bottom>
 </BorderPane>
