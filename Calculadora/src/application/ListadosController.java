@@ -74,13 +74,18 @@ public class ListadosController {
 		
 		Persona p = new Persona(id, nombre, cargo, edad);
 		
+		ConsultasController.guardarPersonaFichero(p);
+		
 		ArrayList<Persona> personas = ConsultasController.listarPersonas();
-		
-		personas.add(p);
-		
+				
 		ObservableList<Persona> data = FXCollections.observableArrayList(personas);
 		
-		tablaPersonas.setItems(data);		
+		tablaPersonas.setItems(data);
+		
+		idTxt.setText("");
+		nombreTxt.setText("");
+		cargoTxt.setText("");
+		edadTxt.setText("");
 	}
 
 }

@@ -4,3 +4,7 @@
 4,Mauricio,Gamer,19
 5,Jonathan,Alumno,21
 6,Victor,Alumno,18
+7,JuanCarlos,Alumno,28
+8,Cristian,Informático,21
+9,Pepito,Informático,74
+10,Rául,Admin,55
