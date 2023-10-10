@@ -18,21 +18,21 @@ public class ListadosController {
 
 	@FXML
 	private TableView<Persona> tablaPersonas;
-	
+
 	@FXML
 	private Button btnAnyadir;
-	
+
 	@FXML
 	private TextField idTxt;
-	
+
 	@FXML
 	private TextField nombreTxt;
-	
+
 	@FXML
 	private TextField cargoTxt;
-	
+
 	@FXML
-	private TextField edadTxt;	
+	private TextField edadTxt;
 
 	@FXML
 	private void initialize() {
@@ -56,32 +56,40 @@ public class ListadosController {
 		ObservableList<Persona> personList = FXCollections.observableArrayList(ConsultasController.listarPersonas());
 
 		tablaPersonas.setItems(personList);
-		
+
 		// evento click sobre filas de una tabla
 		tablaPersonas.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-		    if (newSelection != null) {
-		       System.out.println(newSelection.getNombre());
-		    }
+			if (newSelection != null) {
+				String lineaBuscar = newSelection.getId() + "," + newSelection.getNombre() + ","
+						+ newSelection.getCargo() + "," + newSelection.getEdad();
+				ConsultasController.eliminarPersonaFichero(lineaBuscar);
+
+				ArrayList<Persona> personas = ConsultasController.listarPersonas();
+
+				ObservableList<Persona> data = FXCollections.observableArrayList(personas);
+
+				tablaPersonas.setItems(data);
+			}
 		});
 	}
-	
+
 	public void insertarPersona(ActionEvent e) {
-		
-		int id = Integer.parseInt(idTxt.getText());		
-		String nombre = nombreTxt.getText();		
-		String cargo = cargoTxt.getText();		
+
+		int id = Integer.parseInt(idTxt.getText());
+		String nombre = nombreTxt.getText();
+		String cargo = cargoTxt.getText();
 		int edad = Integer.parseInt(edadTxt.getText());
-		
+
 		Persona p = new Persona(id, nombre, cargo, edad);
-		
+
 		ConsultasController.guardarPersonaFichero(p);
-		
+
 		ArrayList<Persona> personas = ConsultasController.listarPersonas();
-				
+
 		ObservableList<Persona> data = FXCollections.observableArrayList(personas);
-		
+
 		tablaPersonas.setItems(data);
-		
+
 		idTxt.setText("");
 		nombreTxt.setText("");
 		cargoTxt.setText("");

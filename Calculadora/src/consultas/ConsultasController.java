@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.JOptionPane;
 
@@ -63,6 +64,57 @@ public class ConsultasController {
 			out.println(linea);
 
 			JOptionPane.showMessageDialog(null, "Persona guardado con éxito");
+
+		} catch (IOException exception) {
+			// exception handling left as an exercise for the reader
+		}
+	}
+	
+	public static void eliminarPersonaFichero(String lineaBuscar) {
+		
+		String nombre_fichero = "personas.txt";
+		File file = new File(nombre_fichero);
+		
+		FileReader fr = null;
+		BufferedReader br = null;
+		
+		ArrayList<String> personas = new ArrayList<>();
+		
+		try {
+			
+			fr = new FileReader(file);
+			br = new BufferedReader(fr);
+			
+			String linea = "";
+			
+			while((linea = br.readLine()) != null) {
+				if(!linea.trim().equals(lineaBuscar)) {
+					personas.add(linea);					
+				}
+			}
+			
+			br.close();
+			fr.close();
+			
+		}catch (Exception a) {
+			// TODO: handle exception
+		}
+		
+		System.out.println(personas.size());
+		
+		
+		try (FileWriter fw = new FileWriter(file, false);
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter out = new PrintWriter(bw)) {
+			
+			for (int i = 0; i < personas.size(); i++) {
+				out.println(personas.get(i));
+			}
+
+			JOptionPane.showMessageDialog(null, "Persona eliminada con éxito");
+			
+			out.close();
+			bw.close();
 
 		} catch (IOException exception) {
 			// exception handling left as an exercise for the reader
