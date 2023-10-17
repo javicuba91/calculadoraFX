@@ -12,6 +12,7 @@ import java.util.Arrays;
 
 import javax.swing.JOptionPane;
 
+import modelos.Coche;
 import modelos.Persona;
 
 public class ConsultasController {
@@ -119,6 +120,37 @@ public class ConsultasController {
 		} catch (IOException exception) {
 			// exception handling left as an exercise for the reader
 		}
+	}
+	
+	public static ArrayList<Coche> listarCoches() {
+
+		ArrayList<Coche> coches = new ArrayList<>();
+
+		String nombre_fichero = "Coche.txt";
+		File file = new File(nombre_fichero);
+		FileReader fr = null;
+		BufferedReader br = null;
+
+		try {
+
+			fr = new FileReader(file);
+			br = new BufferedReader(fr);
+
+			String linea = "";
+
+			while ((linea = br.readLine()) != null) {
+
+				String[] cochesTxt = linea.split(",");
+
+				Coche c = new Coche(cochesTxt[0], cochesTxt[1], cochesTxt[2], cochesTxt[3], cochesTxt[4]);
+				System.out.println(c.toString());
+				coches.add(c);
+			}
+
+		} catch (Exception a) {
+			// TODO: handle exception
+		}
+		return coches;
 	}
 
 }
