@@ -1,8 +1,0 @@
-5632JHJ,Verde,Corolla,1994,Pepe
-5563XDE,Rojo,CRV,1996,Luis
-3546JAJ,Azul,Mercedes,2021,Luis
-5234MOU,Gris,Prelude,1994,Alconoque
-5234MOU,Verde,Supra,1988,Moris
-4567PLK,Azuñ,Audi,2022,Miguel
-7412QWE,Verde,Nissan,2021,Juan
-2589UIO,Gris,Dacia,2005,Roberto

@@ -137,7 +137,7 @@ public class ConsultasController {
 			br = new BufferedReader(fr);
 
 			String linea = "";
-
+						
 			while ((linea = br.readLine()) != null) {
 
 				String[] cochesTxt = linea.split(",");
@@ -146,6 +146,10 @@ public class ConsultasController {
 				//System.out.println(c.toString());
 				coches.add(c);
 			}
+			
+			br.close();
+			fr.close();
+			
 
 		} catch (Exception a) {
 			// TODO: handle exception
@@ -192,6 +196,21 @@ public class ConsultasController {
 
 		} catch (IOException exception) {
 			// exception handling left as an exercise for the reader
+		}
+	}
+	
+	public static void borrarFichero() {
+		String nombre_fichero = "Coche.txt";
+		File file = new File(nombre_fichero);
+		
+		if(file.exists()){
+			if(file.delete()){
+				JOptionPane.showMessageDialog(null, "Tabla de Coches vacía");
+			}else {
+				JOptionPane.showMessageDialog(null, "No se puede borrar el fichero");
+			}
+		}else{
+			JOptionPane.showMessageDialog(null, "No existe el fichero a eliminar");
 		}
 	}
 

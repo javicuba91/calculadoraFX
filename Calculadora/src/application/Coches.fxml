@@ -19,8 +19,9 @@
             <TextField fx:id="anyoFabTxt" layoutX="49.0" layoutY="344.0" prefHeight="25.0" prefWidth="123.0" promptText="Año de Fabricación" />
             <TextField fx:id="propietarioTxt" layoutX="178.0" layoutY="344.0" prefHeight="25.0" prefWidth="127.0" promptText="Propietario" />
             <Button fx:id="insertarBtn" layoutX="311.0" layoutY="344.0" mnemonicParsing="false" onAction="#insertarCoche" prefHeight="25.0" prefWidth="126.0" text="Insertar" />
-            <Button fx:id="editarBtn" layoutX="111.0" layoutY="377.0" mnemonicParsing="false" onAction="#editar" prefHeight="25.0" prefWidth="125.0" text="Editar" visible="false" />
-            <Button fx:id="eliminarBtn" layoutX="249.0" layoutY="377.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="25.0" prefWidth="125.0" text="Eliminar" visible="false" />
+            <Button fx:id="editarBtn" layoutX="49.0" layoutY="375.0" mnemonicParsing="false" onAction="#editar" prefHeight="25.0" prefWidth="123.0" text="Editar" />
+            <Button fx:id="eliminarBtn" layoutX="178.0" layoutY="375.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="25.0" prefWidth="126.0" text="Eliminar" />
+            <Button fx:id="limpiarTablaBtn" layoutX="311.0" layoutY="375.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="25.0" prefWidth="126.0" text="Limpiar Tabla" />
          </children>
       </AnchorPane>
    </center>

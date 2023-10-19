@@ -46,6 +46,9 @@ public class CochesController {
 
 	@FXML
 	private Button eliminarBtn;
+	
+	@FXML
+    private Button limpiarTablaBtn;
 
 	private int posFilaSeleccionada = 0;
 
@@ -180,4 +183,12 @@ public class CochesController {
 		propietarioTxt.setText("");
 
 	}
+	
+    @FXML
+    void limpiar(ActionEvent event) {
+    	ConsultasController.borrarFichero();    	
+    	ArrayList<Coche> coches_nuevos = ConsultasController.listarCoches();
+		ObservableList<Coche> data = FXCollections.observableArrayList(coches_nuevos);
+		tableCoches.setItems(data);
+    }
 }
