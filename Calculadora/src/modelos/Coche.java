@@ -60,8 +60,8 @@ public class Coche {
 
 	@Override
 	public String toString() {
-		return "Concesionario [Matricula=" + matricula + ", color=" + color + ", modelo=" + modelo + ", añoFabricacion="
-				+ añoFabricacion + ", nombreDueño=" + nombreDueño + "]";
+		return "Concesionario [Matricula=" + matricula.get() + ", color=" + color.get() + ", modelo=" + modelo.get() + ", añoFabricacion="
+				+ añoFabricacion.get() + ", nombreDueño=" + nombreDueño.get() + "]";
 	}
 
 }

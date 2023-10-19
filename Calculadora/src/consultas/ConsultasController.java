@@ -143,7 +143,7 @@ public class ConsultasController {
 				String[] cochesTxt = linea.split(",");
 
 				Coche c = new Coche(cochesTxt[0], cochesTxt[1], cochesTxt[2], cochesTxt[3], cochesTxt[4]);
-				System.out.println(c.toString());
+				//System.out.println(c.toString());
 				coches.add(c);
 			}
 
@@ -151,6 +151,27 @@ public class ConsultasController {
 			// TODO: handle exception
 		}
 		return coches;
+	}
+	
+	public static void guardarCocheFichero(Coche coche) {
+		String nombre_fichero = "Coche.txt";
+
+		File file = new File(nombre_fichero);
+
+		String linea = "";
+
+		try (FileWriter fw = new FileWriter(file, true);
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter out = new PrintWriter(bw)) {
+
+			linea = coche.getMatricula() + "," + coche.getColor() + "," + coche.getModelo() + "," + coche.getAñoFabricacion()+","+coche.getNombreDueño();
+			out.println(linea);
+
+			JOptionPane.showMessageDialog(null, "Coche guardado con éxito");
+
+		} catch (IOException exception) {
+			// exception handling left as an exercise for the reader
+		}
 	}
 
 }
