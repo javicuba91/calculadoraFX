@@ -1,12 +1,8 @@
 5632JHJ,Verde,Corolla,1994,Pepe
 5563XDE,Rojo,CRV,1996,Luis
-5357LOL,Azul,Mustang,1998,Alejandro
-3546JAJ,Amarillo,Civic,1964,Mario
-5234MOU,Negro,Sandero,1991,Alberto
+3546JAJ,Azul,Mercedes,2021,Luis
 5234MOU,Gris,Prelude,1994,Alconoque
 5234MOU,Verde,Supra,1988,Moris
-5234MOU,Azul,Sandero,1992,Hugo
-1234XLM,Negro,Mercedes,2023,Javier
 4567PLK,Azuñ,Audi,2022,Miguel
 7412QWE,Verde,Nissan,2021,Juan
-9876XDF,Marrón,Toyota,2020,Pedro
+2589UIO,Gris,Dacia,2005,Roberto

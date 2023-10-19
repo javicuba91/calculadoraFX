@@ -173,5 +173,26 @@ public class ConsultasController {
 			// exception handling left as an exercise for the reader
 		}
 	}
+	
+	public static void guardarCochesFichero(ArrayList<Coche> coches) {
+		String nombre_fichero = "Coche.txt";
+
+		File file = new File(nombre_fichero);
+
+		String linea = "";
+
+		try (FileWriter fw = new FileWriter(file, false);
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter out = new PrintWriter(bw)) {
+
+			for (int i = 0; i < coches.size(); i++) {
+				linea = coches.get(i).getMatricula() + "," + coches.get(i).getColor() + "," + coches.get(i).getModelo() + "," + coches.get(i).getAñoFabricacion()+","+coches.get(i).getNombreDueño();
+				out.println(linea);
+			}
+
+		} catch (IOException exception) {
+			// exception handling left as an exercise for the reader
+		}
+	}
 
 }

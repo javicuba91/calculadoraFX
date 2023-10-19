@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -46,6 +47,8 @@ public class CochesController {
 	@FXML
 	private Button eliminarBtn;
 
+	private int posFilaSeleccionada = 0;
+
 	@FXML
 	private void initialize() {
 		// crear las columnas de la tabla según el tipo de dato e los atributos
@@ -74,7 +77,19 @@ public class CochesController {
 			if (newSelection != null) {
 				// JOptionPane.showMessageDialog(null, newSelection.toString() );
 				editarBtn.setVisible(true);
-				eliminarBtn.setVisible(true);				
+				eliminarBtn.setVisible(true);
+
+				TablePosition<?, ?> filaSeleccionada = tableCoches.getSelectionModel().getSelectedCells().get(0);
+				int posFila = filaSeleccionada.getRow();
+
+				posFilaSeleccionada = posFila;
+
+				matriculaTxt.setText(newSelection.getMatricula());
+				colorTxt.setText(newSelection.getColor());
+				modeloTxt.setText(newSelection.getModelo());
+				anyoFabTxt.setText(newSelection.getAñoFabricacion());
+				propietarioTxt.setText(newSelection.getNombreDueño());
+
 			}
 		});
 	}
@@ -108,10 +123,61 @@ public class CochesController {
 	@FXML
 	void editar(ActionEvent event) {
 
+		String matricula = matriculaTxt.getText();
+		String color = colorTxt.getText();
+		String modelo = modeloTxt.getText();
+		String anyoFab = anyoFabTxt.getText();
+		String propietario = propietarioTxt.getText();
+
+		Coche coche = new Coche(matricula, color, modelo, anyoFab, propietario);
+
+		ObservableList<Coche> filas = tableCoches.getItems();
+		filas.set(posFilaSeleccionada, coche);
+
+		// guardamos la nueva lista conn la fila elimianda
+		ArrayList<Coche> coches = new ArrayList<>(tableCoches.getItems());
+		ConsultasController.guardarCochesFichero(coches);
+
+		// cargamos de nuevo la lista de coches
+		ArrayList<Coche> coches_nuevos = ConsultasController.listarCoches();
+
+		ObservableList<Coche> data = FXCollections.observableArrayList(coches_nuevos);
+
+		tableCoches.setItems(data);
+		
+		matriculaTxt.setText("");
+		colorTxt.setText("");
+		modeloTxt.setText("");
+		anyoFabTxt.setText("");
+		propietarioTxt.setText("");
 	}
 
 	@FXML
 	void eliminar(ActionEvent event) {
+
+		// eliminar la fila seleccionada
+		ObservableList<Coche> filas = tableCoches.getItems();
+
+		if (posFilaSeleccionada < filas.size()) {
+			filas.remove(posFilaSeleccionada);
+		}
+
+		// guardamos la nueva lista conn la fila elimianda
+		ArrayList<Coche> coches = new ArrayList<>(tableCoches.getItems());
+		ConsultasController.guardarCochesFichero(coches);
+
+		// cargamos de nuevo la lista de coches
+		ArrayList<Coche> coches_nuevos = ConsultasController.listarCoches();
+
+		ObservableList<Coche> data = FXCollections.observableArrayList(coches_nuevos);
+
+		tableCoches.setItems(data);
+		
+		matriculaTxt.setText("");
+		colorTxt.setText("");
+		modeloTxt.setText("");
+		anyoFabTxt.setText("");
+		propietarioTxt.setText("");
 
 	}
 }
