@@ -213,5 +213,31 @@ public class ConsultasController {
 			JOptionPane.showMessageDialog(null, "No existe el fichero a eliminar");
 		}
 	}
+	
+	public static boolean verificarMatricula(String matricula) {
+		boolean existe = false;
+		
+		ArrayList<Coche> coches = listarCoches();
+		
+		for (int i = 0; i < coches.size(); i++) {
+			if(coches.get(i).getMatricula().equalsIgnoreCase(matricula)) {
+				existe = true;
+				break;
+			}
+		}
+		
+		return existe;
+	}
+	
+	public static boolean verificarFormatoMatricula(String matricula) {
+				
+		boolean formatoOk = false;
+		
+		if(matricula.toUpperCase().matches("^[0-9]{4}[A-Z]{3}")) {
+			formatoOk = true;
+		}		
+				
+		return formatoOk;
+	}
 
 }

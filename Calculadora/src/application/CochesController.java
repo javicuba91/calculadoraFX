@@ -1,22 +1,31 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.JOptionPane;
 
 import consultas.ConsultasController;
 import modelos.Coche;
 import modelos.Persona;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 public class CochesController {
 
@@ -39,6 +48,9 @@ public class CochesController {
 	private TextField modeloTxt;
 
 	@FXML
+	private MenuBar menuBar;
+
+	@FXML
 	private TextField propietarioTxt;
 
 	@FXML
@@ -46,11 +58,14 @@ public class CochesController {
 
 	@FXML
 	private Button eliminarBtn;
-	
-	@FXML
-    private Button limpiarTablaBtn;
 
-	private int posFilaSeleccionada = 0;
+	@FXML
+	private Button limpiarTablaBtn;
+
+	@FXML
+	private MenuItem itemCerrar;
+
+	private int posFilaSeleccionada = -1;
 
 	@FXML
 	private void initialize() {
@@ -100,27 +115,52 @@ public class CochesController {
 	@FXML
 	public void insertarCoche(ActionEvent event) {
 
-		String matricula = matriculaTxt.getText();
-		String color = colorTxt.getText();
-		String modelo = modeloTxt.getText();
-		String anyoFab = anyoFabTxt.getText();
-		String propietario = propietarioTxt.getText();
+		if (verificarCamposVacios() == false) {
+			boolean formatoMatricula = ConsultasController.verificarFormatoMatricula(matriculaTxt.getText());
+			if (formatoMatricula == true) {
 
-		Coche coche = new Coche(matricula, color, modelo, anyoFab, propietario);
+				String matricula = matriculaTxt.getText();
 
-		ConsultasController.guardarCocheFichero(coche);
+				if (ConsultasController.verificarMatricula(matricula) == false) {
 
-		ArrayList<Coche> coches = ConsultasController.listarCoches();
+					String color = colorTxt.getText();
+					String modelo = modeloTxt.getText();
+					String anyoFab = anyoFabTxt.getText();
+					String propietario = propietarioTxt.getText();
 
-		ObservableList<Coche> data = FXCollections.observableArrayList(coches);
+					int anyoFabNum = Integer.parseInt(anyoFab);
+					GregorianCalendar fechaActual = new GregorianCalendar();
 
-		tableCoches.setItems(data);
+					if (anyoFabNum <= fechaActual.get(Calendar.YEAR)) {
+						Coche coche = new Coche(matricula, color, modelo, anyoFab, propietario);
 
-		matriculaTxt.setText("");
-		colorTxt.setText("");
-		modeloTxt.setText("");
-		anyoFabTxt.setText("");
-		propietarioTxt.setText("");
+						ConsultasController.guardarCocheFichero(coche);
+
+						ArrayList<Coche> coches = ConsultasController.listarCoches();
+
+						ObservableList<Coche> data = FXCollections.observableArrayList(coches);
+
+						tableCoches.setItems(data);
+
+						matriculaTxt.setText("");
+						colorTxt.setText("");
+						modeloTxt.setText("");
+						anyoFabTxt.setText("");
+						propietarioTxt.setText("");
+					} else {
+						JOptionPane.showMessageDialog(null, "El año de fabricación no puede ser mayor que el año actual. Revise por favor !!");
+					}
+
+				} else {
+					JOptionPane.showMessageDialog(null, "La matrícula ya existe. Revise por favor !!");
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "El formato de la matrícula no es correcto. Revise por favor !!");
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Existen campos vacíos. Revise por favor !!");
+		}
+
 	}
 
 	@FXML
@@ -147,7 +187,7 @@ public class CochesController {
 		ObservableList<Coche> data = FXCollections.observableArrayList(coches_nuevos);
 
 		tableCoches.setItems(data);
-		
+
 		matriculaTxt.setText("");
 		colorTxt.setText("");
 		modeloTxt.setText("");
@@ -175,7 +215,7 @@ public class CochesController {
 		ObservableList<Coche> data = FXCollections.observableArrayList(coches_nuevos);
 
 		tableCoches.setItems(data);
-		
+
 		matriculaTxt.setText("");
 		colorTxt.setText("");
 		modeloTxt.setText("");
@@ -183,12 +223,32 @@ public class CochesController {
 		propietarioTxt.setText("");
 
 	}
-	
-    @FXML
-    void limpiar(ActionEvent event) {
-    	ConsultasController.borrarFichero();    	
-    	ArrayList<Coche> coches_nuevos = ConsultasController.listarCoches();
+
+	@FXML
+	void limpiar(ActionEvent event) {
+		ConsultasController.borrarFichero();
+		ArrayList<Coche> coches_nuevos = ConsultasController.listarCoches();
 		ObservableList<Coche> data = FXCollections.observableArrayList(coches_nuevos);
 		tableCoches.setItems(data);
-    }
+	}
+
+	@FXML
+	void cerrarAplicacion(ActionEvent event) {
+		Platform.exit();
+	}
+
+	public boolean verificarCamposVacios() {
+		boolean vacio = false;
+
+		if (matriculaTxt.getText().equalsIgnoreCase("") || colorTxt.getText().equalsIgnoreCase("")
+				|| modeloTxt.getText().equalsIgnoreCase("") || anyoFabTxt.getText().equalsIgnoreCase("")
+				|| propietarioTxt.getText().equalsIgnoreCase("")) {
+
+			vacio = true;
+
+		}
+
+		return vacio;
+	}
+
 }
