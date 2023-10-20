@@ -1,4 +1,3 @@
-1234XLZ,Verde,Audi,2023,Gabriel
-9876JHG,Amarillo,Dacia,2020,Mauricio
-1235KJH,Azul,Camaro,2021,Raúl
-7879POI,Azul,Kiat,2023,Carlos
+1234LKJ,Verde,Audi,2023,Javier
+3698POK,Negro,Mercedes,2021,Carlos
+2589LKJ,Verde,Dacia,2018,Pepe

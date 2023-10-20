@@ -65,6 +65,15 @@ public class CochesController {
 	@FXML
 	private MenuItem itemCerrar;
 
+	@FXML
+	private Button borrarCriteriosBtn;
+
+	@FXML
+	private Button buscarBtn;
+
+	@FXML
+	private TextField buscarColorTxt;
+
 	private int posFilaSeleccionada = -1;
 
 	@FXML
@@ -148,7 +157,8 @@ public class CochesController {
 						anyoFabTxt.setText("");
 						propietarioTxt.setText("");
 					} else {
-						JOptionPane.showMessageDialog(null, "El año de fabricación no puede ser mayor que el año actual. Revise por favor !!");
+						JOptionPane.showMessageDialog(null,
+								"El año de fabricación no puede ser mayor que el año actual. Revise por favor !!");
 					}
 
 				} else {
@@ -166,61 +176,74 @@ public class CochesController {
 	@FXML
 	void editar(ActionEvent event) {
 
-		String matricula = matriculaTxt.getText();
-		String color = colorTxt.getText();
-		String modelo = modeloTxt.getText();
-		String anyoFab = anyoFabTxt.getText();
-		String propietario = propietarioTxt.getText();
+		if (posFilaSeleccionada >= 0) {
+			String matricula = matriculaTxt.getText();
+			String color = colorTxt.getText();
+			String modelo = modeloTxt.getText();
+			String anyoFab = anyoFabTxt.getText();
+			String propietario = propietarioTxt.getText();
 
-		Coche coche = new Coche(matricula, color, modelo, anyoFab, propietario);
+			Coche coche = new Coche(matricula, color, modelo, anyoFab, propietario);
 
-		ObservableList<Coche> filas = tableCoches.getItems();
-		filas.set(posFilaSeleccionada, coche);
+			ObservableList<Coche> filas = tableCoches.getItems();
+			filas.set(posFilaSeleccionada, coche);
 
-		// guardamos la nueva lista conn la fila elimianda
-		ArrayList<Coche> coches = new ArrayList<>(tableCoches.getItems());
-		ConsultasController.guardarCochesFichero(coches);
+			// guardamos la nueva lista conn la fila elimianda
+			ArrayList<Coche> coches = new ArrayList<>(tableCoches.getItems());
+			ConsultasController.guardarCochesFichero(coches);
 
-		// cargamos de nuevo la lista de coches
-		ArrayList<Coche> coches_nuevos = ConsultasController.listarCoches();
+			// cargamos de nuevo la lista de coches
+			ArrayList<Coche> coches_nuevos = ConsultasController.listarCoches();
 
-		ObservableList<Coche> data = FXCollections.observableArrayList(coches_nuevos);
+			ObservableList<Coche> data = FXCollections.observableArrayList(coches_nuevos);
 
-		tableCoches.setItems(data);
+			tableCoches.setItems(data);
 
-		matriculaTxt.setText("");
-		colorTxt.setText("");
-		modeloTxt.setText("");
-		anyoFabTxt.setText("");
-		propietarioTxt.setText("");
+			matriculaTxt.setText("");
+			colorTxt.setText("");
+			modeloTxt.setText("");
+			anyoFabTxt.setText("");
+			propietarioTxt.setText("");
+
+			posFilaSeleccionada = -1;
+		} else {
+			JOptionPane.showMessageDialog(null, "Debes seleccionar una fila para poder editar. Revise por favor !!");
+		}
+
 	}
 
 	@FXML
 	void eliminar(ActionEvent event) {
 
-		// eliminar la fila seleccionada
-		ObservableList<Coche> filas = tableCoches.getItems();
+		if (posFilaSeleccionada >= 0) {
+			// eliminar la fila seleccionada
+			ObservableList<Coche> filas = tableCoches.getItems();
 
-		if (posFilaSeleccionada < filas.size()) {
-			filas.remove(posFilaSeleccionada);
+			if (posFilaSeleccionada < filas.size()) {
+				filas.remove(posFilaSeleccionada);
+			}
+
+			// guardamos la nueva lista conn la fila elimianda
+			ArrayList<Coche> coches = new ArrayList<>(tableCoches.getItems());
+			ConsultasController.guardarCochesFichero(coches);
+
+			// cargamos de nuevo la lista de coches
+			ArrayList<Coche> coches_nuevos = ConsultasController.listarCoches();
+
+			ObservableList<Coche> data = FXCollections.observableArrayList(coches_nuevos);
+
+			tableCoches.setItems(data);
+
+			matriculaTxt.setText("");
+			colorTxt.setText("");
+			modeloTxt.setText("");
+			anyoFabTxt.setText("");
+			propietarioTxt.setText("");
+
+			posFilaSeleccionada = -1;
+		} else {
+			JOptionPane.showMessageDialog(null, "Debes seleccionar una fila para poder eliminar. Revise por favor !!");
 		}
-
-		// guardamos la nueva lista conn la fila elimianda
-		ArrayList<Coche> coches = new ArrayList<>(tableCoches.getItems());
-		ConsultasController.guardarCochesFichero(coches);
-
-		// cargamos de nuevo la lista de coches
-		ArrayList<Coche> coches_nuevos = ConsultasController.listarCoches();
-
-		ObservableList<Coche> data = FXCollections.observableArrayList(coches_nuevos);
-
-		tableCoches.setItems(data);
-
-		matriculaTxt.setText("");
-		colorTxt.setText("");
-		modeloTxt.setText("");
-		anyoFabTxt.setText("");
-		propietarioTxt.setText("");
 
 	}
 
@@ -249,6 +272,42 @@ public class CochesController {
 		}
 
 		return vacio;
+	}
+
+	@FXML
+	void borrarCriterios(ActionEvent event) {
+		buscarColorTxt.setText("");
+		ArrayList<Coche> coches = ConsultasController.listarCoches();
+		ObservableList<Coche> data = FXCollections.observableArrayList(coches);
+		tableCoches.setItems(data);
+	}
+
+	@FXML
+	void buscarPorColor(ActionEvent event) {
+		
+		if(!buscarColorTxt.getText().equalsIgnoreCase("")) {
+			
+			String color = buscarColorTxt.getText();
+			
+			ArrayList<Coche> coches = ConsultasController.listaCochesBusqueda(color);
+			
+			if(coches.size() > 0) {
+				
+				ObservableList<Coche> data = FXCollections.observableArrayList(coches);
+				tableCoches.setItems(data);
+				
+			}else {
+				coches = new ArrayList<>();
+				JOptionPane.showMessageDialog(null, "No existen coches con el color: "+color+". Revise por favor !!");
+				ObservableList<Coche> data = FXCollections.observableArrayList(coches);
+				tableCoches.setItems(data);
+			}
+			
+		}else {
+			JOptionPane.showMessageDialog(null, "Para buscar debes escribir un criterio. Revise por favor !!");
+		}
+		
+		
 	}
 
 }

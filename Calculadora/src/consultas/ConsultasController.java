@@ -239,5 +239,18 @@ public class ConsultasController {
 				
 		return formatoOk;
 	}
+	
+	public static ArrayList<Coche> listaCochesBusqueda(String color){
+		ArrayList<Coche> coches = new ArrayList<>();
+		ArrayList<Coche> coches_actuales = listarCoches();
+		
+		for (int i = 0; i < coches_actuales.size(); i++) {
+			if(coches_actuales.get(i).getColor().equalsIgnoreCase(color)) {
+				coches.add(coches_actuales.get(i));
+			}
+		}
+		
+		return coches;
+	}
 
 }
