@@ -252,5 +252,45 @@ public class ConsultasController {
 		
 		return coches;
 	}
+	
+	public static ArrayList<Coche> listaCochesFecha(int fechaDesde, int fechaHasta){
+		ArrayList<Coche> coches = new ArrayList<>();
+		ArrayList<Coche> coches_actuales = listarCoches();
+		
+		for (int i = 0; i < coches_actuales.size(); i++) {
+			int anyoFab = Integer.parseInt(coches_actuales.get(i).getAñoFabricacion());
+			
+			if(anyoFab >= fechaDesde && anyoFab <= fechaHasta) {
+				coches.add(coches_actuales.get(i));
+			}
+			
+		}
+		
+		return coches;
+	}
 
+	public static void guardarCochesFicheroCriterios(String fichero, ArrayList<Coche> coches) {
+		String nombre_fichero = "filtros/"+fichero+".txt";
+
+		File file = new File(nombre_fichero);
+
+		String linea = "";
+
+		try (FileWriter fw = new FileWriter(file,true);
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter out = new PrintWriter(bw)) {
+
+			for (int i = 0; i < coches.size(); i++) {
+				linea = coches.get(i).getMatricula() + "," + coches.get(i).getColor() + "," + coches.get(i).getModelo() + "," + coches.get(i).getAñoFabricacion()+","+coches.get(i).getNombreDueño();
+				out.println(linea);
+			}
+
+			out.close();
+			bw.close();
+			
+		} catch (IOException exception) {
+			// exception handling left as an exercise for the reader
+		}
+	}
+	
 }

@@ -76,6 +76,20 @@ public class CochesController {
 
 	private int posFilaSeleccionada = -1;
 
+	// Buscador por fechas
+
+	@FXML
+	private Button borrarCriteriosFechasBtn;
+
+	@FXML
+	private Button buscarFechasBtn;
+
+	@FXML
+	private TextField fechaDesdeTxt;
+
+	@FXML
+	private TextField fechaHastaTxt;
+
 	@FXML
 	private void initialize() {
 		// crear las columnas de la tabla según el tipo de dato e los atributos
@@ -284,30 +298,84 @@ public class CochesController {
 
 	@FXML
 	void buscarPorColor(ActionEvent event) {
-		
-		if(!buscarColorTxt.getText().equalsIgnoreCase("")) {
-			
+
+		if (!buscarColorTxt.getText().equalsIgnoreCase("")) {
+
 			String color = buscarColorTxt.getText();
-			
+
 			ArrayList<Coche> coches = ConsultasController.listaCochesBusqueda(color);
-			
-			if(coches.size() > 0) {
-				
+
+			if (coches.size() > 0) {
+
 				ObservableList<Coche> data = FXCollections.observableArrayList(coches);
 				tableCoches.setItems(data);
-				
-			}else {
+
+			} else {
 				coches = new ArrayList<>();
-				JOptionPane.showMessageDialog(null, "No existen coches con el color: "+color+". Revise por favor !!");
+				JOptionPane.showMessageDialog(null,
+						"No existen coches con el color: " + color + ". Revise por favor !!");
 				ObservableList<Coche> data = FXCollections.observableArrayList(coches);
 				tableCoches.setItems(data);
 			}
-			
-		}else {
+
+		} else {
 			JOptionPane.showMessageDialog(null, "Para buscar debes escribir un criterio. Revise por favor !!");
 		}
+
+	}
+
+	@FXML
+	void borrarCriteriosFechas(ActionEvent event) {
+		ArrayList<Coche> coches = ConsultasController.listarCoches();
+		ObservableList<Coche> data = FXCollections.observableArrayList(coches);
+		tableCoches.setItems(data);
 		
+		fechaDesdeTxt.setText("");
+		fechaHastaTxt.setText("");
+	}
+
+	@FXML
+	void buscarPorFechas(ActionEvent event) {
+
+		if(!fechaDesdeTxt.getText().equalsIgnoreCase("") && 
+				!fechaHastaTxt.getText().equalsIgnoreCase("")) {
+			
+			int fechaDesde = Integer.parseInt(fechaDesdeTxt.getText());
+			int fechaHasta = Integer.parseInt(fechaHastaTxt.getText());
+			
+			if(fechaDesde < fechaHasta) {
+				
+				ArrayList<Coche> coches = ConsultasController.listaCochesFecha(fechaDesde, fechaHasta);
+				ObservableList<Coche> data = FXCollections.observableArrayList(coches);
+				tableCoches.setItems(data);
+				
+				fechaDesdeTxt.setText("");
+				fechaHastaTxt.setText("");
+				
+			}else {
+				JOptionPane.showMessageDialog(null, "La Fecha Desde debe ser menor que la Fecha Hasta. Revise por favor !!");
+			}
+			
+		}else {
+			ArrayList<Coche> coches = ConsultasController.listarCoches();
+			ObservableList<Coche> data = FXCollections.observableArrayList(coches);
+			tableCoches.setItems(data);
+		}
 		
 	}
+	
+	@FXML
+    void exportar(ActionEvent event) {
+		// acción de leer un valor de un JOption Pane				
+		String nombre_fichero = JOptionPane.showInputDialog(null, "Entre el nombre del fichero a guardar");
+				
+		// Lista de coches de la tabla actual
+		ArrayList<Coche> coches = new ArrayList<>(tableCoches.getItems());
+		
+		// Invocar al método de guardar en  el fichero
+		ConsultasController.guardarCochesFicheroCriterios(nombre_fichero, coches);
+		
+		JOptionPane.showMessageDialog(null, "Coches exportados con éxito!!");
+    }
 
 }
