@@ -1,3 +1,0 @@
-1234LKJ,Azul,Audi,2023,Javier
-2589LKJ,Verde,Dacia,2018,Pepe
-1231LKJ,Amarillo,Toyota,2020,Mauricio

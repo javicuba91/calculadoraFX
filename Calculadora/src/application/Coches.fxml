@@ -11,7 +11,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CochesController">
    <center>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="487.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="487.0" BorderPane.alignment="CENTER">
          <children>
             <TableView fx:id="tableCoches" layoutX="44.0" layoutY="126.0" prefHeight="239.0" prefWidth="400.0" />
             <TextField fx:id="matriculaTxt" layoutX="49.0" layoutY="377.0" prefHeight="25.0" prefWidth="123.0" promptText="Matrícula" />
@@ -27,7 +27,7 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                        <MenuItem mnemonicParsing="false" onAction="#exportar" text="Exportar" />
+                        <MenuItem mnemonicParsing="false" onAction="#exportar" text="(Ctrl) Exportar" />
                     <MenuItem fx:id="itemCerrar" mnemonicParsing="false" onAction="#cerrarAplicacion" text="Cerrar" />
                   </items>
                 </Menu>

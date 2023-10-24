@@ -14,6 +14,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -25,9 +26,16 @@ import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class CochesController {
+
+	@FXML
+	private AnchorPane anchorPane;
 
 	@FXML
 	private TableView<Coche> tableCoches;
@@ -92,6 +100,9 @@ public class CochesController {
 
 	@FXML
 	private void initialize() {
+
+		eventosTeclado();
+
 		// crear las columnas de la tabla según el tipo de dato e los atributos
 		TableColumn<Coche, String> columnaMatricula = new TableColumn<>("Matricula");
 		columnaMatricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
@@ -131,6 +142,14 @@ public class CochesController {
 				anyoFabTxt.setText(newSelection.getAñoFabricacion());
 				propietarioTxt.setText(newSelection.getNombreDueño());
 
+			}
+		});
+	}
+
+	public void eventosTeclado() {
+		anchorPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+			if (event.getCode() == KeyCode.CONTROL) {
+				exportarTecla();
 			}
 		});
 	}
@@ -329,7 +348,7 @@ public class CochesController {
 		ArrayList<Coche> coches = ConsultasController.listarCoches();
 		ObservableList<Coche> data = FXCollections.observableArrayList(coches);
 		tableCoches.setItems(data);
-		
+
 		fechaDesdeTxt.setText("");
 		fechaHastaTxt.setText("");
 	}
@@ -337,45 +356,57 @@ public class CochesController {
 	@FXML
 	void buscarPorFechas(ActionEvent event) {
 
-		if(!fechaDesdeTxt.getText().equalsIgnoreCase("") && 
-				!fechaHastaTxt.getText().equalsIgnoreCase("")) {
-			
+		if (!fechaDesdeTxt.getText().equalsIgnoreCase("") && !fechaHastaTxt.getText().equalsIgnoreCase("")) {
+
 			int fechaDesde = Integer.parseInt(fechaDesdeTxt.getText());
 			int fechaHasta = Integer.parseInt(fechaHastaTxt.getText());
-			
-			if(fechaDesde < fechaHasta) {
-				
+
+			if (fechaDesde < fechaHasta) {
+
 				ArrayList<Coche> coches = ConsultasController.listaCochesFecha(fechaDesde, fechaHasta);
 				ObservableList<Coche> data = FXCollections.observableArrayList(coches);
 				tableCoches.setItems(data);
-				
+
 				fechaDesdeTxt.setText("");
 				fechaHastaTxt.setText("");
-				
-			}else {
-				JOptionPane.showMessageDialog(null, "La Fecha Desde debe ser menor que la Fecha Hasta. Revise por favor !!");
+
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"La Fecha Desde debe ser menor que la Fecha Hasta. Revise por favor !!");
 			}
-			
-		}else {
+
+		} else {
 			ArrayList<Coche> coches = ConsultasController.listarCoches();
 			ObservableList<Coche> data = FXCollections.observableArrayList(coches);
 			tableCoches.setItems(data);
 		}
-		
+
 	}
-	
+
 	@FXML
-    void exportar(ActionEvent event) {
-		// acción de leer un valor de un JOption Pane				
+	void exportar(ActionEvent event) {
+		// acción de leer un valor de un JOption Pane
 		String nombre_fichero = JOptionPane.showInputDialog(null, "Entre el nombre del fichero a guardar");
-				
+
 		// Lista de coches de la tabla actual
 		ArrayList<Coche> coches = new ArrayList<>(tableCoches.getItems());
-		
-		// Invocar al método de guardar en  el fichero
+
+		// Invocar al método de guardar en el fichero
 		ConsultasController.guardarCochesFicheroCriterios(nombre_fichero, coches);
-		
+
 		JOptionPane.showMessageDialog(null, "Coches exportados con éxito!!");
-    }
+	}
+
+	void exportarTecla() {
+		String nombre_fichero = JOptionPane.showInputDialog(null, "Entre el nombre del fichero a guardar");
+
+		// Lista de coches de la tabla actual
+		ArrayList<Coche> coches = new ArrayList<>(tableCoches.getItems());
+
+		// Invocar al método de guardar en el fichero
+		ConsultasController.guardarCochesFicheroCriterios(nombre_fichero, coches);
+
+		JOptionPane.showMessageDialog(null, "Coches exportados con éxito!!");
+	}
 
 }
